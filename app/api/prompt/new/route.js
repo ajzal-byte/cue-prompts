@@ -1,5 +1,6 @@
 import { connectToDB } from "@utils/database";
 import Prompt from "@models/prompt";
+import { revalidatePath } from "next/cache";
 
 export const POST = async (req, res) => {
   const { userId, prompt, tag } = await req.json();
@@ -13,6 +14,8 @@ export const POST = async (req, res) => {
     });
 
     await newPrompt.save();
+    revalidatePath("/profile");
+    revalidatePath("/");
 
     return new Response(JSON.stringify(newPrompt), { status: 201 });
   } catch (error) {

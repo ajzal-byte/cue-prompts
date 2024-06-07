@@ -1,5 +1,6 @@
 import { connectToDB } from "@utils/database";
 import Prompt from "@models/prompt";
+import { revalidatePath } from "next/cache";
 
 // GET (read)
 export const GET = async (req, { params }) => {
@@ -32,6 +33,8 @@ export const PATCH = async (req, { params }) => {
     existingPrompt.tag = tag;
 
     await existingPrompt.save();
+    revalidatePath("/profile");
+    revalidatePath("/");
 
     return new Response(JSON.stringify(existingPrompt), { status: 200 });
   } catch (error) {
@@ -45,6 +48,9 @@ export const DELETE = async (req, { params }) => {
     await connectToDB();
 
     await Prompt.findByIdAndDelete(params.id);
+
+    revalidatePath("/profile");
+    revalidatePath("/");
 
     return new Response("Prompt deleted successfully", { status: 200 });
   } catch (error) {
