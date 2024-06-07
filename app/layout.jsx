@@ -13,7 +13,7 @@ const Rootlayout = ({ children }) => {
   return (
     <html lang="en">
       {/* <Head>
-      <link rel="shortcut icon" href="/logo.webp" />
+      <link rel="shortcut icon" href="/images/favicon.ico" />
     </Head> */}
       <body>
       <link rel="icon" href="/images/favicon.ico" sizes="any" />
