@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Form } from "@components";
 
@@ -34,7 +34,7 @@ const EditPrompt = () => {
     e.preventDefault();
     setSubmitting(true);
 
-    if(!promptId) return alert("Prompt ID not found")
+    if (!promptId) return alert("Prompt ID not found");
 
     try {
       const response = await fetch(`/api/prompt/${promptId}`, {
@@ -66,9 +66,11 @@ const EditPrompt = () => {
 };
 
 const UpdatePrompt = () => {
-  return <Suspense>
+  return (
+    <Suspense>
       <UpdatePrompt />
-  </Suspense>
-}
+    </Suspense>
+  );
+};
 
 export default UpdatePrompt;
